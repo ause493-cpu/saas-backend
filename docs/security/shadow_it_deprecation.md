@@ -1,0 +1,11 @@
+| Integration_Name | Annual_Cost | Instance_Count | Action |
+| --- | ---: | ---: | --- |
+| BambooHR | 2640000.00 | 165 | Revoke_SSO |
+| Datadog | 6930000.00 | 165 | Revoke_SSO |
+| Docker | 1155000.00 | 165 | Revoke_SSO |
+| HubSpot | 2970000.00 | 165 | Revoke_SSO |
+| LastPass | 1072500.00 | 165 | Revoke_SSO |
+| Oracle | 4125000.00 | 165 | Revoke_SSO |
+| Tableau | 3630000.00 | 165 | Revoke_SSO |
+| Twilio | 2227500.00 | 165 | Revoke_SSO |
+| ZoomInfo | 1320000.00 | 165 | Revoke_SSO |
