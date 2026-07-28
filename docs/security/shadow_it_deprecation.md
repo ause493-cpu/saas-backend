@@ -1,5 +1,3 @@
-# Shadow IT deprecation risk assessment
-
 ```json
 [
   {
