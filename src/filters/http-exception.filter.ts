@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import * as Sentry from '@sentry/node';
 import { Response } from 'express';
+import { isDatabaseConnectionLimitError } from '../providers/prisma/prisma.connection';
 
 // If you have a Sentry DSN, add it here for error tracking and uncomment the Sentry lines (12, 28)
 // Sentry.init({ dsn: '' });
@@ -23,6 +24,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       return response.status(status).json(exception.getResponse());
+    }
+
+    if (isDatabaseConnectionLimitError(exception)) {
+      response.setHeader('Retry-After', '5');
+
+      return response.status(HttpStatus.SERVICE_UNAVAILABLE).json({
+        statusCode: HttpStatus.SERVICE_UNAVAILABLE,
+        message: 'The service is temporarily busy. Please retry shortly.',
+        error: 'Service unavailable',
+      });
     }
 
     // Sentry.captureException(exception);
