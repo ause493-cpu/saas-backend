@@ -6,12 +6,29 @@ import {
   Session,
   User,
 } from '@prisma/client';
+import { createPooledDatabaseUrl } from './prisma.connection';
 import { Expose } from './prisma.interface';
 
 @Injectable()
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy {
+  constructor() {
+    const databaseUrl = process.env.DATABASE_URL;
+
+    super(
+      databaseUrl
+        ? {
+            datasources: {
+              mysql: {
+                url: createPooledDatabaseUrl(databaseUrl),
+              },
+            },
+          }
+        : undefined,
+    );
+  }
+
   async onModuleInit() {
     await this.$connect();
   }
