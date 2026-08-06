@@ -36,6 +36,19 @@ DATABASE_URL = "mysql://USER:PASSWORD@HOST:PORT/DATABSE"
 
 You can read more about this URL on the [Add to existing project](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project-typescript-postgres#connect-your-database) article on the Prisma docs website.
 
+Set an explicit per-worker connection budget and pool wait timeout in
+production. The defaults below apply when the connection URL does not already
+contain `connection_limit` or `pool_timeout`:
+
+```env
+DATABASE_CONNECTION_LIMIT = 5
+DATABASE_POOL_TIMEOUT_SECONDS = 10
+```
+
+Multiply the connection limit by the number of application instances and
+workers to verify that the aggregate remains below the database's maximum,
+with capacity reserved for migrations, background jobs, and administration.
+
 ### Sending emails
 
 Staart API sends transactions emails for email verification, password resets, etc. You can either send emails using SMTP or AWS SES. If you want to use SMTP:
