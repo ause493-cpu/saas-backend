@@ -15,6 +15,10 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
 
+  // Release database connections on SIGTERM/SIGINT so rolling deploys
+  // don't leak connections and exhaust the server's max_connections.
+  app.enableShutdownHooks();
+
   const pkg = JSON.parse(
     await promises.readFile(join('.', 'package.json'), 'utf8'),
   );
